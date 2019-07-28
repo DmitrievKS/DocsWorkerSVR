@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddItemActivity">
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+
+        >
+
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+
+            <View
+                android:id="@+id/divider_2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Имя"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_2" />
+
+            <EditText
+                android:id="@+id/name_EditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="ФИО постояльца"
+                android:inputType="textPersonName"
+                android:maxLines="70"
+                android:maxLength="70"
+                android:padding="8dp"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/name_textView"
+                app:layout_constraintTop_toBottomOf="@+id/divider_2" />
+
+            <View
+                android:id="@+id/divider_3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name_EditText" />
+
+            <TextView
+                android:id="@+id/roomNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Номер комнаты"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_3" />
+
+            <EditText
+                android:id="@+id/roomNumber_EditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="Введите номер"
+                android:inputType="number"
+                android:maxLines="5"
+                android:maxLength="5"
+                android:padding="8dp"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/roomNumber"
+                app:layout_constraintTop_toBottomOf="@+id/divider_3" />
+
+
+            <View
+                android:id="@+id/divider_4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/roomNumber_EditText" />
+
+
+            <TextView
+                android:id="@+id/need"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Нужности"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_4" />
+
+            <EditText
+                android:id="@+id/need_EditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="Что необходимо?"
+                android:inputType="text"
+                android:maxLines="150"
+                android:maxLength="150"
+                android:padding="8dp"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/need"
+                app:layout_constraintTop_toBottomOf="@+id/divider_4" />
+
+
+            <View
+                android:id="@+id/divider_6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/need_EditText" />
+
+
+            <TextView
+                android:id="@+id/responsible"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Ответственный"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_6" />
+
+            <EditText
+                android:id="@+id/responsible_EditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="Представьтесь"
+                android:inputType="textPersonName"
+                android:maxLines="70"
+                android:maxLength="70"
+                android:padding="8dp"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/responsible"
+                app:layout_constraintTop_toBottomOf="@+id/divider_6" />
+
+
+            <View
+                android:id="@+id/divider_7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/responsible_EditText" />
+
+            <TextView
+                android:id="@+id/notes"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Примечание"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_7" />
+
+            <EditText
+                android:id="@+id/notes_EditText"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:gravity="end"
+                android:hint="Необязательное поле"
+                android:inputType="text"
+                android:maxLines="100"
+                android:maxLength="100"
+                android:padding="8dp"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/notes"
+                app:layout_constraintTop_toBottomOf="@+id/divider_7" />
+
+            <View
+                android:id="@+id/divider_9"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/notes_EditText" />
+
+
+            <TextView
+                android:id="@+id/Stages"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Этаж"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_9" />
+
+            <Spinner
+                android:id="@+id/spinner_stages"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Stages"
+                app:layout_constraintTop_toBottomOf="@+id/divider_9" />
+
+            <View
+                android:id="@+id/divider_11"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_stages" />
+
+
+            <TextView
+                android:id="@+id/Categories"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Категория"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_11" />
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Categories"
+                app:layout_constraintTop_toBottomOf="@+id/divider_11" />
+
+
+            <View
+                android:id="@+id/divider_12"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_category" />
+
+
+            <Button
+                android:id="@+id/btn_add_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Add Item"
+                android:background="@android:color/white"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_12" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">DocsWorkerSVR</string>
+
+    <string-array name="array_stages">
+        <item>-</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="array_categories">
+        <item>-</item>
+        <item>аптечное</item>
+        <item>батарейки</item>
+        <item>газетное</item>
+        <item>диабетические продукты</item>
+        <item>еда</item>
+        <item>книги</item>
+        <item>лупы</item>
+        <item>мобильные телефоны</item>
+        <item>ноутбуки и планшеты</item>
+        <item>обувь</item>
+        <item>одежда</item>
+        <item>одёжное аксессуары</item>
+        <item>православное</item>
+        <item>прочее</item>
+        <item>радио, муз центры</item>
+        <item>сбор на сайте</item>
+        <item>специализированно для слепых</item>
+        <item>                       тапки</item>
+        <item>телевизоры</item>
+        <item>техника прочее</item>
+        <item>хобби и рукоделие</item>
+        <item>хоз и гигиена</item>
+        <item>цифровые приставки и антенны</item>
+        <item>электробритвы</item>
+        <item>DVD и CD диски</item>
+        <item>dvd-проигрыватели</item>
+    </string-array>
+
+    <string name="no_internet_access">Отсутствует подключение к интернету</string>
+    <string name="select_stage">Выберите этаж</string>
+    <string name="fill_fields">Заполните обязательные поля</string>
+
+</resources>
