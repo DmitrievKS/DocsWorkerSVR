@@ -15,12 +15,24 @@
       },
       "oauth_client": [
         {
+          "client_id": "750398141550-ogv7df417jmv9frkbbpai8eg5g7olvi6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kirdmt.com.docsworkersvr",
+            "certificate_hash": "d6718924f3b5a7bc1504b5fb1862792b4cb126b1"
+          }
+        },
+        {
           "client_id": "750398141550-gnkd7a91nk7j0ejjcei3t6qmllj5v9uk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "kirdmt.com.docsworkersvr",
             "certificate_hash": "5aa4447df5000a0f803a51c84c688dbdc7e30328"
           }
+        },
+        {
+          "client_id": "750398141550-ee49gpipnpek8t8mu7k348u9v2nar12s.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -32,7 +44,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "750398141550-ee49gpipnpek8t8mu7k348u9v2nar12s.apps.googleusercontent.com",
+              "client_id": "750398141550-1d77cl6m93hi9jm6cd65jsvr61b273im.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

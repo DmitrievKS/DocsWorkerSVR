@@ -23,7 +23,7 @@ public class ExcelData {
     @PrimaryKey
     private long id = 0;
 
-    ExcelData() {
+    public ExcelData() {
 
     }
 
@@ -106,4 +106,12 @@ public class ExcelData {
     public void setAction(String action) {
         this.action = action;
     }
+
+    /*public String getHouseIndex() {
+        return houseIndex;
+    }
+
+    public void setHouseIndex(String houseIndex) {
+        this.houseIndex = houseIndex;
+    }*/
 }

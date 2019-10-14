@@ -6,6 +6,10 @@
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
     </string-array>
 
     <string-array name="array_categories">
@@ -38,8 +42,27 @@
         <item>dvd-проигрыватели</item>
     </string-array>
 
+    <string-array name="array_houses">
+        <item>-</item>
+        <item>Калуга</item>
+        <item>Волочек</item>
+    </string-array>
+
     <string name="no_internet_access">Отсутствует подключение к интернету</string>
     <string name="select_stage">Выберите этаж</string>
     <string name="fill_fields">Заполните обязательные поля</string>
+    <string name="select_house">Выберите домик</string>
+    <string name="select_category">Выберите категорию</string>
+    <string name="action_information">Information</string>
+    <string name="please_wait">Please wait</string>
+    <string name="data_from_db_to_server">Данные записанные в БД отправляются на сервер</string>
+    <string name="app_version_prefix">Версия приложения:</string>
+
+
+    <string name="author">Добавлено кем:</string>
+    <string name="need">Необходимо:</string>
+    <string name="date">Когда добавлено:</string>
+    <string name="method">Добавлено из:</string>
+    <string name="residentIs">Для постояльца:</string>
 
 </resources>

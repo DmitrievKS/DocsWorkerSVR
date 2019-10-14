@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddItemActivity">
+    tools:context=".Activities.AddItemActivity">
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -327,9 +327,8 @@
                 app:layout_constraintStart_toEndOf="@+id/Categories"
                 app:layout_constraintTop_toBottomOf="@+id/divider_11" />
 
-
             <View
-                android:id="@+id/divider_12"
+                android:id="@+id/divider_13"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="8dp"
@@ -341,11 +340,51 @@
                 app:layout_constraintTop_toBottomOf="@+id/spinner_category" />
 
 
+            <TextView
+                android:id="@+id/Houses"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Домик"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_13" />
+
+            <Spinner
+                android:id="@+id/spinner_houses"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                android:gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Houses"
+                app:layout_constraintTop_toBottomOf="@+id/divider_13" />
+
+
+            <View
+                android:id="@+id/divider_12"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_houses" />
+
+
             <Button
                 android:id="@+id/btn_add_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="40dp"
                 android:text="Add Item"
                 android:background="@android:color/white"
                 android:textColor="@android:color/black"
