@@ -1,6 +1,10 @@
-package kirdmt.com.docsworkersvr;
+package kirdmt.com.docsworkersvr.contractView;
 
 import android.app.ProgressDialog;
+
+import java.util.List;
+
+import kirdmt.com.docsworkersvr.ExcelData;
 
 public interface ContractView {
 

@@ -1,8 +1,8 @@
 package kirdmt.com.docsworkersvr;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.annotation.NonNull;
 
 
 @Entity
@@ -23,7 +23,7 @@ public class ExcelData {
     @PrimaryKey
     private long id = 0;
 
-    ExcelData() {
+    public ExcelData() {
 
     }
 
@@ -106,4 +106,12 @@ public class ExcelData {
     public void setAction(String action) {
         this.action = action;
     }
+
+    /*public String getHouseIndex() {
+        return houseIndex;
+    }
+
+    public void setHouseIndex(String houseIndex) {
+        this.houseIndex = houseIndex;
+    }*/
 }

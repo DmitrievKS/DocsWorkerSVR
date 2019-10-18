@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddItemActivity">
+    tools:context=".Activities.AddItemActivity">
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +16,7 @@
         >
 
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:focusable="true"
@@ -59,8 +59,8 @@
                 android:gravity="end"
                 android:hint="ФИО постояльца"
                 android:inputType="textPersonName"
-                android:maxLines="70"
                 android:maxLength="70"
+                android:maxLines="70"
                 android:padding="8dp"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
@@ -103,8 +103,8 @@
                 android:gravity="end"
                 android:hint="Введите номер"
                 android:inputType="number"
-                android:maxLines="5"
                 android:maxLength="5"
+                android:maxLines="5"
                 android:padding="8dp"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
@@ -149,8 +149,8 @@
                 android:gravity="end"
                 android:hint="Что необходимо?"
                 android:inputType="text"
-                android:maxLines="150"
                 android:maxLength="150"
+                android:maxLines="150"
                 android:padding="8dp"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
@@ -195,8 +195,8 @@
                 android:gravity="end"
                 android:hint="Представьтесь"
                 android:inputType="textPersonName"
-                android:maxLines="70"
                 android:maxLength="70"
+                android:maxLines="70"
                 android:padding="8dp"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
@@ -240,8 +240,8 @@
                 android:gravity="end"
                 android:hint="Необязательное поле"
                 android:inputType="text"
-                android:maxLines="100"
                 android:maxLength="100"
+                android:maxLines="100"
                 android:padding="8dp"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
@@ -281,9 +281,9 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="end"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
-                android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Stages"
                 app:layout_constraintTop_toBottomOf="@+id/divider_9" />
@@ -320,12 +320,51 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="end"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
-                android:gravity="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Categories"
                 app:layout_constraintTop_toBottomOf="@+id/divider_11" />
+
+            <View
+                android:id="@+id/divider_13"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_category" />
+
+
+            <TextView
+                android:id="@+id/Houses"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Домик"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider_13" />
+
+            <Spinner
+                android:id="@+id/spinner_houses"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="end"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Houses"
+                app:layout_constraintTop_toBottomOf="@+id/divider_13" />
 
 
             <View
@@ -338,22 +377,24 @@
                 android:background="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_category" />
+                app:layout_constraintTop_toBottomOf="@+id/spinner_houses" />
 
 
             <Button
                 android:id="@+id/btn_add_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/transparent_bg_bordered_button"
+                android:gravity="center"
                 android:text="Add Item"
-                android:background="@android:color/white"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider_12" />
 
-        </android.support.constraint.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </ScrollView>

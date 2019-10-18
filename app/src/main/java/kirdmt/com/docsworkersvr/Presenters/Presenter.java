@@ -1,10 +1,16 @@
-package kirdmt.com.docsworkersvr;
+package kirdmt.com.docsworkersvr.Presenters;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.List;
+
+import kirdmt.com.docsworkersvr.CallBacks.ModelCallback;
+import kirdmt.com.docsworkersvr.util.ConnectivityHelper;
+import kirdmt.com.docsworkersvr.ExcelData;
+import kirdmt.com.docsworkersvr.Models.Model;
+import kirdmt.com.docsworkersvr.R;
+import kirdmt.com.docsworkersvr.contractView.ContractView;
 
 
 public class Presenter {
@@ -15,7 +21,9 @@ public class Presenter {
     private Context context;
     int itemsInDataBase;
 
-    Presenter(ContractView AddItem, Context context) {
+    //static final List<String> Houses = new ArrayList<String>();
+
+    public Presenter(ContractView AddItem, Context context) {
 
         this.context = context;
         this.view = AddItem;
@@ -24,8 +32,8 @@ public class Presenter {
 
         saveDataFromBD();
 
-    }
 
+    }
 
     private void saveDataFromBD() {
 
@@ -33,12 +41,12 @@ public class Presenter {
 
         if (itemsInDataBase > 0 & ConnectivityHelper.isConnectedToNetwork(context)) {
 
-            view.showToast("Данные записанные в БД отправляются на сервер.");
+            view.showToast(context.getString(R.string.data_from_db_to_server));
 
             List<ExcelData> excelDataList = model.getSqlRows();
 
             while (itemsInDataBase > 0) {
-                model.sendData(excelDataList.get(itemsInDataBase - 1), new ModelCallback() {
+                model.sendData(true, excelDataList.get(itemsInDataBase - 1), new ModelCallback() {
                     @Override
                     public void onCallBack(String response) {
 
@@ -57,7 +65,7 @@ public class Presenter {
 
             model.addSqlData(excelData);
 
-            view.showToast("Отсутствует подключение к интернету, сохроняю в БД.");
+            view.showToast(context.getString(R.string.no_internet_access));
 
             voidModel();
             view.startMain();
@@ -66,7 +74,7 @@ public class Presenter {
 
             view.showProgress("Adding Item");
 
-            model.sendData(excelData, new ModelCallback() {
+            model.sendData(false, excelData, new ModelCallback() {
                 @Override
                 public void onCallBack(String response) {
 

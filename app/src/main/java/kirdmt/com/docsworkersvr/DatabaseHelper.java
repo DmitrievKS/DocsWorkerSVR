@@ -1,7 +1,7 @@
 package kirdmt.com.docsworkersvr;
 
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.room.*;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
+import androidx.room.*;
 
 @Database(entities = { ExcelData.class }, version = 1, exportSchema = false)
 public abstract class DatabaseHelper extends RoomDatabase {

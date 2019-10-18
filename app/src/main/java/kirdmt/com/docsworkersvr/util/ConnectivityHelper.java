@@ -1,4 +1,4 @@
-package kirdmt.com.docsworkersvr;
+package kirdmt.com.docsworkersvr.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

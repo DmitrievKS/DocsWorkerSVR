@@ -1,25 +1,27 @@
-package kirdmt.com.docsworkersvr;
+package kirdmt.com.docsworkersvr.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-//TODO: UI. Сдавинуть значение спинеров ближе к правому краю. В том числе улучшить spinner.
+import kirdmt.com.docsworkersvr.ExcelData;
+import kirdmt.com.docsworkersvr.Presenters.Presenter;
+import kirdmt.com.docsworkersvr.R;
+import kirdmt.com.docsworkersvr.contractView.ContractView;
+
 //TODO: Перенести кнопку отправки на верх?
-//TODO: корректная реализация progressDialog при загрузки данных в бд и из бд.
-//TODO: Добавить recycleView в котором транслируются все добавляемые в реальном времени позиции по всем этажам.
 
-
-public class AddItemActivity extends AppCompatActivity implements View.OnClickListener, ContractView {
+public class AddItemActivity extends AppCompatActivity implements View.OnClickListener, ContractView, AdapterView.OnItemSelectedListener {
 
     SharedPreferences myPrefs;
 
@@ -32,9 +34,11 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     Button buttonAddItem;
     Spinner spinnerStages;
     Spinner spinnerCategories;
+    Spinner spinnerHouses;
 
     ArrayAdapter spinnerAdapterCategory;
     ArrayAdapter spinnerAdapterStage;
+    ArrayAdapter spinnerAdapterHouses;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         myPrefs = getSharedPreferences("settings", getApplicationContext().MODE_PRIVATE);
         String savedName = myPrefs.getString("nameKey", "no name");
         int savedStagePosition = myPrefs.getInt("stagePositionKey", 0);
+        int savedHousesPosition = myPrefs.getInt("housesPositionKey", 0);
 
         presenter = new Presenter(this, getApplicationContext());
 
@@ -56,10 +61,13 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
                 R.array.array_categories, R.layout.spinner_item);
         spinnerAdapterStage = ArrayAdapter.createFromResource(this,
                 R.array.array_stages, R.layout.spinner_item);
+        spinnerAdapterHouses = ArrayAdapter.createFromResource(this,
+                R.array.array_houses, R.layout.spinner_item);
 
 
         spinnerAdapterCategory.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerAdapterStage.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerAdapterHouses.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
         buttonAddItem = (Button) findViewById(R.id.btn_add_item);
         buttonAddItem.setOnClickListener(this);
@@ -71,6 +79,10 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         spinnerCategories = (Spinner) findViewById(R.id.spinner_category);
         spinnerCategories.setAdapter(spinnerAdapterCategory);
         spinnerCategories.setSelection(0, true);
+
+        spinnerHouses = (Spinner) findViewById(R.id.spinner_houses);
+        spinnerHouses.setAdapter(spinnerAdapterHouses);
+        spinnerHouses.setSelection(0, true);
 
         editTextRoomNumber = (EditText) findViewById(R.id.roomNumber_EditText);
         editTextName = (EditText) findViewById(R.id.name_EditText);
@@ -84,6 +96,9 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         }
         if (savedStagePosition != 0) {
             spinnerStages.setSelection(savedStagePosition);
+        }
+        if (savedHousesPosition != 0) {
+            spinnerHouses.setSelection(savedHousesPosition);
         }
 
     }
@@ -101,7 +116,7 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void showProgress(String operationExplanation) {
 
-        progressDialog = ProgressDialog.show(this, operationExplanation, "Please wait");
+        progressDialog = ProgressDialog.show(this, operationExplanation, getString(R.string.please_wait ));
     }
 
     @Override
@@ -120,8 +135,9 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public ExcelData getData() {
 
-        final String stage = spinnerStages.getSelectedItem().toString().trim(); // trim - удаяет пробелы в начале иконцестроки.
+        final String stage = spinnerStages.getSelectedItem().toString().trim(); // trim - удаяет пробелы в начале и конце строки.
         final String category = spinnerCategories.getSelectedItem().toString().trim();
+        final String house = spinnerHouses.getSelectedItem().toString().trim();
 
         final String name = editTextName.getText().toString().trim();
         final String roomNumber = editTextRoomNumber.getText().toString().trim();
@@ -129,25 +145,32 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         final String responsible = editTextResponsible.getText().toString().trim();
         final String notes = editTextNotes.getText().toString().trim();
 
-        if (stage.contains("-")) //проверка на выбор этажа
+
+        if (house.contains("-") & house.length() < 2) {
+
+            Toast.makeText(AddItemActivity.this, getString(R.string.select_house), Toast.LENGTH_LONG).show();
+            return null;
+        } else if (stage.contains("-")) //проверка на выбор этажа
         {
-            Toast.makeText(AddItemActivity.this, "Выберите этаж", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddItemActivity.this, getString(R.string.select_stage), Toast.LENGTH_LONG).show();
             return null;
         } else if (category.contains("-") & (category.length() < 2)) //проверка на выбор этажа
         {
-            Toast.makeText(AddItemActivity.this, "Выберите категорию", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddItemActivity.this, getString(R.string.select_category), Toast.LENGTH_LONG).show();
             return null;
         } else if (name.length() == 0 || roomNumber.length() == 0 || need.length() == 0) //проверка на заполненость обязательных полей.
         {
-            Toast.makeText(AddItemActivity.this, "Заполните обязательные поля", Toast.LENGTH_LONG).show();
+            Toast.makeText(AddItemActivity.this, getString(R.string.fill_fields), Toast.LENGTH_LONG).show();
             return null;
         }
 
         SharedPreferences.Editor editor = myPrefs.edit();
         editor.putString("nameKey", responsible);
         editor.putInt("stagePositionKey", spinnerStages.getSelectedItemPosition());
+        editor.putInt("housesPositionKey", spinnerHouses.getSelectedItemPosition());
         editor.apply();
 
+        excelData.setAdded(house); // incorrect Data.name (Added). - this is field for set house.
         excelData.setCategory(category);
         excelData.setName(name);
         excelData.setNeed(need);
@@ -168,6 +191,21 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+        // On selecting a spinner item
+        // String item = adapterView.getItemAtPosition(i).toString();
+
+        //presenter.getHistoryData(i);
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
 }

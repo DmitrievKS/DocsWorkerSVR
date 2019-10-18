@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="ThemeOverlay.MyTextDetail" parent="AppTheme">
         <item name="android:layout_width">wrap_content</item>
@@ -55,7 +55,25 @@
         <item name="colorPrimary">@color/black</item>dimen
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/black</item>
+
     </style>
+
+    <style name="Theme.MyCompatTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
+    <item name="android:actionBarStyle">@style/ActionBar</item>
+    <item name="actionBarStyle">@style/ActionBar</item>
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/black</item>
+    <item name="colorAccent">@color/black</item>
+    </style>
+
+    <style name="ActionBar"
+        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="background">@color/black</item>
+    </style>
+
+
 
 
 

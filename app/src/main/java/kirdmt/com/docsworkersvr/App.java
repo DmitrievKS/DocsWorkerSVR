@@ -1,7 +1,7 @@
 package kirdmt.com.docsworkersvr;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 
 //not used
 public class App extends Application {

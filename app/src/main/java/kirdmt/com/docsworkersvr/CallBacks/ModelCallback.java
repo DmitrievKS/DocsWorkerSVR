@@ -1,4 +1,4 @@
-package kirdmt.com.docsworkersvr;
+package kirdmt.com.docsworkersvr.CallBacks;
 
 public interface ModelCallback {
 
