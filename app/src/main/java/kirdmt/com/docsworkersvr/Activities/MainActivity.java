@@ -1,12 +1,14 @@
 package kirdmt.com.docsworkersvr.Activities;
 
-//TODO Улучшение дизайна.(мелочи, выпадающий список)
+//TODO Улучшение дизайна.(мелочи, выпадающий список, цвет элементов EditText. Плохо видно на слонце.)
 //TODO ТЗ Володи Высокого. (возможно стоит ознакомиться, какие идеи есть?)
 //TODO Перенос приложения на iOS.
 //TODO Улучшеить исполнения паттерна МВП.
 //TODO сделать корректный ProgressDialog для БД и FireBase.
+//TODO остается проблема связанная с плохим соединением с интернетом.
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,7 +19,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,25 +39,63 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import kirdmt.com.docsworkersvr.CallBacks.HousesCallback;
 import kirdmt.com.docsworkersvr.R;
+import kirdmt.com.docsworkersvr.util.ConnectivityHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     static final String FIREBASE_AUTH_TAG = "fireBaseAuthTag";
 
-    private Button buttonAddItem, buttonLogin, buttonRegistration;
-    private FloatingActionButton fab;
+    private FirebaseDatabase database;
+    private DatabaseReference housesRef;
     private FirebaseAuth mAuth;
 
+    private FloatingActionButton fab;
+    private Button buttonAddItem, buttonLogin, buttonRegistration;
     private TextView emailText, passwordText, helloText;
     private EditText emailEdit, passwordEdit;
     private View divider1, divider2, divider3;
+    private ProgressDialog progressDialog;
 
+    private static List<String> housesList;
+
+    private static boolean fireBaseFirstStart = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        getHousesList(new HousesCallback() {
+            @Override
+            public void onCallBack(DataSnapshot snapshot) {
+
+                housesList = new ArrayList<String>();
+
+                for (DataSnapshot snap : snapshot.getChildren()) {
+
+                    housesList.add(snap.child("name").getValue().toString());
+
+                    //Log.w("FBTAG", "Value is: " + snap.child("name").getValue().toString());
+
+                }
+
+                try {
+                    progressDialog.cancel();
+                }
+                catch (Exception e)
+                {
+                    Log.d("progressDialogTagExcept", "Exception is: " + e.getMessage());
+                }
+
+
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -91,10 +137,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
+
         if (v == buttonAddItem) {
 
-            Intent intent = new Intent(getApplicationContext(), AddItemActivity.class);
-            startActivity(intent);
+            Intent addItemIntent = new Intent(getApplicationContext(), AddItemActivity.class);
+            addItemIntent.putStringArrayListExtra("housesList", (ArrayList<String>) housesList);
+            startActivity(addItemIntent);
 
         } else if (v == fab) {
 
@@ -190,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     void actionInformation() {
 
         Intent historyIntent = new Intent(getApplicationContext(), HistoryActivity.class);
+        historyIntent.putStringArrayListExtra("housesList", (ArrayList<String>) housesList);
         startActivity(historyIntent);
     }
 
@@ -232,5 +281,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(MainActivity.this, str,
                 Toast.LENGTH_LONG).show();
     }
+
+
+    void getHousesList(final HousesCallback callback) {
+
+        if (ConnectivityHelper.isConnectedToNetwork(this)) {
+
+            progressDialog = ProgressDialog.show(this, getString(R.string.loading_houses), getString(R.string.please_wait));
+
+        }
+
+        database = FirebaseDatabase.getInstance();
+
+        if (fireBaseFirstStart) {
+            database.setPersistenceEnabled(true);
+            fireBaseFirstStart = false;
+        }
+
+        housesRef = database.getReference("houses");
+        housesRef.keepSynced(true);
+        housesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                callback.onCallBack(dataSnapshot);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(FIREBASE_AUTH_TAG, "Failed to read value.", error.toException());
+            }
+
+        });
+
+        //  }
+    }
+
 
 }

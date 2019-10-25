@@ -4,8 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import kirdmt.com.docsworkersvr.ExcelData;
 import kirdmt.com.docsworkersvr.Presenters.Presenter;
@@ -30,15 +35,17 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     Presenter presenter;
     ExcelData excelData = new ExcelData();
 
-    EditText editTextName, editTextRoomNumber, editTextNeed, editTextResponsible, editTextNotes;
-    Button buttonAddItem;
-    Spinner spinnerStages;
-    Spinner spinnerCategories;
-    Spinner spinnerHouses;
+    private EditText editTextName, editTextRoomNumber, editTextNeed, editTextResponsible, editTextNotes;
+    private Button buttonAddItem;
+    private Spinner spinnerStages;
+    private Spinner spinnerCategories;
+    private Spinner spinnerHouses;
 
-    ArrayAdapter spinnerAdapterCategory;
-    ArrayAdapter spinnerAdapterStage;
-    ArrayAdapter spinnerAdapterHouses;
+    private ArrayAdapter spinnerAdapterCategory;
+    private ArrayAdapter spinnerAdapterStage;
+    private ArrayAdapter spinnerAdapterHouses;
+
+    private List<String> housesList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +56,11 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void init() {
+
+        Bundle extras = getIntent().getExtras();
+
+        housesList = new ArrayList<>();
+        housesList = extras.getStringArrayList("housesList");
 
         myPrefs = getSharedPreferences("settings", getApplicationContext().MODE_PRIVATE);
         String savedName = myPrefs.getString("nameKey", "no name");
@@ -61,9 +73,7 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
                 R.array.array_categories, R.layout.spinner_item);
         spinnerAdapterStage = ArrayAdapter.createFromResource(this,
                 R.array.array_stages, R.layout.spinner_item);
-        spinnerAdapterHouses = ArrayAdapter.createFromResource(this,
-                R.array.array_houses, R.layout.spinner_item);
-
+        spinnerAdapterHouses =  new ArrayAdapter<String>(this, R.layout.spinner_item, housesList);
 
         spinnerAdapterCategory.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerAdapterStage.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -116,7 +126,7 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void showProgress(String operationExplanation) {
 
-        progressDialog = ProgressDialog.show(this, operationExplanation, getString(R.string.please_wait ));
+        progressDialog = ProgressDialog.show(this, operationExplanation, getString(R.string.please_wait));
     }
 
     @Override
@@ -189,8 +199,10 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         presenter = null;
         excelData = null;
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);*/
+
+        onBackPressed();
     }
 
     @Override

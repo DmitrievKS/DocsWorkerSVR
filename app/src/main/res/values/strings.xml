@@ -10,6 +10,7 @@
         <item>5</item>
         <item>6</item>
         <item>7</item>
+        <item>Общее</item>
     </string-array>
 
     <string-array name="array_categories">
@@ -60,6 +61,9 @@
     <string name="app_version_prefix">Версия приложения:</string>
     <string name="hello_dear_friend">Здравствуй, дорогой гость! Для использования приложения необходимо зарегистрироваться.</string>
     <string name="no_access">Не удалось войти</string>
+    <string name="error_message_from_server">Не удалось отправить сообщение. Попробуйте еще раз.</string>
+    <string name="loading_houses">Подгружается список домиков</string>
+    <string name="add_item">Adding item</string>
 
 
     <string name="author">Добавлено кем:</string>
@@ -76,6 +80,6 @@
     <string name="alert_title">О приложении:</string>
     <string name="alert_main_message">Приложение написано для практики разработки для Android. Приложение полностью бесплатное и свободно для распространения. По всем вопросам, пожеланиям, идеям добавлений в новые версии, ошибкам - обращаться по электронной почте LLirikNN@gmail.com.</string>
 
-    <string name="version_name">1.5</string>
+    <string name="version_name">1.6</string>
 
 </resources>

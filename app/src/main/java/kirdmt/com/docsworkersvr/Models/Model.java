@@ -2,7 +2,9 @@ package kirdmt.com.docsworkersvr.Models;
 
 
 import androidx.room.Room;
+
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 
@@ -91,6 +93,12 @@ public class Model {
             }
         };
 
+        try {
+            Thread.currentThread().sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
 
         RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
@@ -100,7 +108,6 @@ public class Model {
         queue.add(stringRequest);
 
         insertFireBaseData(excelData, dataFromBD);
-        //предположительно сюда вписать код добалвения истории в fireBase.
 
     }
 
@@ -144,7 +151,6 @@ public class Model {
     public int getCountSqlRows() {
         return db.getDataDao().count();
     }
-
 
 
     protected void insertFireBaseData(final ExcelData excelData, boolean fromBD)

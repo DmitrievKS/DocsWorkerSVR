@@ -8,8 +8,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import kirdmt.com.docsworkersvr.CallBacks.HousesCallback;
 import kirdmt.com.docsworkersvr.CallBacks.ModelHistoryCallback;
-import kirdmt.com.docsworkersvr.CallBacks.ModelHousesCallback;
 
 
 //UNUSED!
@@ -40,7 +40,7 @@ public class FireBaseWorker {
 
     }
 
-    public void getHouses(final ModelHousesCallback callback) {
+    public void getHouses(final HousesCallback callback) {
         // Read from the database
 
         housesRef = database.getReference("houses");

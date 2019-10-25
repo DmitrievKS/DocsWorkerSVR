@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kirdmt.com.docsworkersvr.CallBacks.ModelHistoryCallback;
-import kirdmt.com.docsworkersvr.CallBacks.ModelHousesCallback;
 import kirdmt.com.docsworkersvr.Data.HistoryData;
 
 public class ModelHistory {
@@ -22,9 +21,8 @@ public class ModelHistory {
     final static String fbValueTAGError = "fbValueTAGError";
 
     FirebaseDatabase database;
-    DatabaseReference historyRef, housesRef;
+    DatabaseReference historyRef;
 
-    //static final List<String> Houses = new ArrayList<String>();
     static final List<HistoryData> historyData = new ArrayList<HistoryData>();
 
     public ModelHistory() {
@@ -38,16 +36,21 @@ public class ModelHistory {
         historyRef = database.getReference("history/house" + houseIndex);
         //myRef.keepSynced(true);
 
-        historyRef.orderByChild("number").limitToLast(50).addValueEventListener(new ValueEventListener() {
+
+        historyRef.orderByChild("number").limitToLast(70).addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                //Log.d(fbValueTAG, "Im here. 1");
+                if (!dataSnapshot.hasChildren()) {
+                    callback.onCallBack(null);
+                } else {
 
-                for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
 
-                    callback.onCallBack(dataSnapshot);
+                        callback.onCallBack(dataSnapshot);
 
+                    }
                 }
 
             }
@@ -55,9 +58,10 @@ public class ModelHistory {
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                //Log.w(fbValueTAGError, "Failed to read value.", error.toException());
+
             }
         });
+
     }
 
     public void fireBaseInit() {
@@ -73,27 +77,6 @@ public class ModelHistory {
 
     }
 
-
-    //UNUSED
-    public void getHouses(final ModelHousesCallback callback) {
-     /*   // Read from the database
-
-        housesRef = database.getReference("houses");
-//        myRef.keepSynced(true);
-        housesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                callback.onCallBack(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(fbValueTAGError, "Failed to read value.", error.toException());
-            }
-        });*/
-    }
 }
 
 

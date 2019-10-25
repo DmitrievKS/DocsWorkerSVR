@@ -2,6 +2,7 @@ package kirdmt.com.docsworkersvr.Presenters;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.List;
 
@@ -41,19 +42,27 @@ public class Presenter {
 
         if (itemsInDataBase > 0 & ConnectivityHelper.isConnectedToNetwork(context)) {
 
-            view.showToast(context.getString(R.string.data_from_db_to_server));
+            view.showProgress(context.getString(R.string.data_from_db_to_server));
 
             List<ExcelData> excelDataList = model.getSqlRows();
 
             while (itemsInDataBase > 0) {
+
                 model.sendData(true, excelDataList.get(itemsInDataBase - 1), new ModelCallback() {
                     @Override
                     public void onCallBack(String response) {
-
                     }
+
                 });
+
                 itemsInDataBase--;
+
+                if (itemsInDataBase == 0) {
+                    view.hideProgress();
+                    view.showToast(context.getString(R.string.data_from_db_to_server));
+                }
             }
+
         }
 
     }
@@ -72,9 +81,10 @@ public class Presenter {
 
         } else {
 
-            view.showProgress("Adding Item");
+            view.showProgress(context.getString(R.string.add_item));
 
             model.sendData(false, excelData, new ModelCallback() {
+
                 @Override
                 public void onCallBack(String response) {
 
@@ -82,18 +92,24 @@ public class Presenter {
 
                     if (response.equals("Success")) {
 
-                        view.showToast(response);
+
                         view.hideProgress();
+                        view.showToast(response);
+
+                        voidModel();
+                        view.startMain();
 
                     } else {
 
-                        view.showToast(response);
+                        //не проверенно
                         view.hideProgress();
+                        view.showToast(context.getString(R.string.error_message_from_server));
+
 
                     }
 
-                    voidModel();
-                    view.startMain();
+                    /*voidModel();
+                    view.startMain();*/
 
                 }
             });

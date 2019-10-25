@@ -22,15 +22,32 @@
 
     <TextView
         android:id="@+id/text_version"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_gravity="left"
         android:gravity="left"
         android:padding="8dp"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider_top" />
+
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/transparent_bg_bordered_button"
+        android:gravity="center"
+        android:layout_gravity="left"
+        android:text="Search"
+        android:textColor="@android:color/white"
+        android:onClick="searchOnClickListener"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_top" />
 
 
     <View
@@ -84,14 +101,57 @@
         app:layout_constraintTop_toBottomOf="@+id/house" />
 
 
+    <TextView
+        android:id="@+id/name_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Кто добавил: "
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_1" />
+
+    <EditText
+        android:id="@+id/name_filter_EditText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@null"
+        android:gravity="end"
+        android:hint="Отфильтровать по имени"
+        android:inputType="text"
+        android:maxLength="150"
+        android:maxLines="150"
+        android:padding="8dp"
+        android:textColor="@color/gray"
+        android:textColorHint="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/name_filter"
+        app:layout_constraintTop_toBottomOf="@+id/divider_1" />
+
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_filter_EditText" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/card_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider_1" />
+        app:layout_constraintTop_toBottomOf="@+id/divider_2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

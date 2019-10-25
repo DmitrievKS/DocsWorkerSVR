@@ -19,8 +19,6 @@ public interface ContractViewHistory {
 
     void fillRecycler(List<HistoryData> list);
 
-    void createHousesSpinner(List<String> list);
-
     Context getContext();
 
     void showToast(String message);
