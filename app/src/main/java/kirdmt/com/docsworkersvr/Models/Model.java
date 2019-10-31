@@ -4,6 +4,7 @@ package kirdmt.com.docsworkersvr.Models;
 import androidx.room.Room;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -34,9 +35,11 @@ import kirdmt.com.docsworkersvr.ExcelData;
 import kirdmt.com.docsworkersvr.util.Support;
 
 
+//TODO remove bad decision with house index
+//TODO save server link on fireBase server?
+
 public class Model {
 
-    //save this link on fireBase server
     private static final String URL = "https://script.google.com/macros/s/AKfycbykkdBuaylDEGqWLpFIqlzhTU8VIgtwY4O0ytRs9OwosZowkcc/exec";
 
     Support support = new Support();
@@ -48,15 +51,18 @@ public class Model {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference ref = database.getReference("history");
 
-    public Model(Context context) {
+    private List<String> housesList;
+
+    public Model(Context context, List<String> houseList) {
 
         this.addItemContext = context;
+        this.housesList = houseList;
 
         DbInit();
     }
 
 
-    public void sendData(boolean dataFromBD, final ExcelData excelData, final ModelCallback modelCallback) {
+    public void sendData(String dataDirection, final ExcelData excelData, final ModelCallback modelCallback) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
                 new Response.Listener<String>() {
                     @Override
@@ -99,7 +105,7 @@ public class Model {
             e.printStackTrace();
         }
 
-        int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
+        int socketTimeOut = 50000;// 50 seconds
 
         RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(retryPolicy);
@@ -107,7 +113,7 @@ public class Model {
         RequestQueue queue = Volley.newRequestQueue(addItemContext);
         queue.add(stringRequest);
 
-        insertFireBaseData(excelData, dataFromBD);
+        insertFireBaseData(excelData, dataDirection);
 
     }
 
@@ -126,6 +132,7 @@ public class Model {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         excelData.setId(timestamp.getTime());
 
+        //why?
         if (excelData.getNotes() == null) {
             excelData.setNotes("нет данных");
         }
@@ -152,30 +159,10 @@ public class Model {
         return db.getDataDao().count();
     }
 
+    protected void insertFireBaseData(final ExcelData excelData, final String dataDirection) {
+        int houseIndex = housesList.indexOf(excelData.getAdded());
 
-    protected void insertFireBaseData(final ExcelData excelData, boolean fromBD)
-//protected void insertFireBaseData()
-    {
-        //fireBase example
-    /*DatabaseReference usersRef = ref.child("users");
-    Map<String, User> users = new HashMap<>();
-    users.put("alanisawesome", new User("June 23, 1912", "Alan Turing"));*/
-
-        final String method;
-
-        if (fromBD) {
-            method = "DataBase";
-        } else {
-            method = "Direct";
-        }
-
-
-        int houseIndex = 0;
-        if (excelData.getAdded().contains("Калуга")) {
-            houseIndex = 0;
-        } else if (excelData.getAdded().contains("Волочек")) {
-            houseIndex = 1;
-        }
+        //Log.d("ModelTAG", "houseIndex is: " + houseIndex);
 
         final DatabaseReference housesRef = ref.child("house" + houseIndex);
 
@@ -189,7 +176,14 @@ public class Model {
 
                 int number = Integer.parseInt(result);
 
-                housesRef.child("historyElement" + elementIndex).setValue(new HistoryData(excelData.getName(), excelData.getAdded(), excelData.getResponsible(), excelData.getNeed(), date, method, number));
+                housesRef.child("historyElement" + elementIndex)
+                        .setValue(new HistoryData(excelData.getName(),
+                                excelData.getAdded(),
+                                excelData.getResponsible(),
+                                excelData.getNeed(),
+                                date,
+                                dataDirection,
+                                number));
             }
 
         });
@@ -201,11 +195,9 @@ public class Model {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //long numChildren = dataSnapshot.getChildrenCount();
 
                 callback.onCallBack(String.valueOf(dataSnapshot.getChildrenCount() + 1));
 
-                //Log.d("fireBaseTag", " == " + numChildren);
             }
 
             @Override

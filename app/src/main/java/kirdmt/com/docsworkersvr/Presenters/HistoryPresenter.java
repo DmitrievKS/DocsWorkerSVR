@@ -44,16 +44,13 @@ public class HistoryPresenter {
 
         } else if (index != 0) {
 
-            index--;
-
             historyModel.getHistoryData(index, new ModelHistoryCallback() {
                 @Override
                 public void onCallBack(DataSnapshot snapshot) {
 
                     historyData.clear();
 
-                    if(snapshot == null)
-                    {
+                    if (snapshot == null) {
                         historyView.fillRecycler(historyData);
                         return;
                     }

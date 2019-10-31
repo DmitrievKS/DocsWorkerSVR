@@ -3,12 +3,12 @@ package kirdmt.com.docsworkersvr.Activities;
 //TODO Улучшение дизайна.(мелочи, выпадающий список, цвет элементов EditText. Плохо видно на слонце.)
 //TODO ТЗ Володи Высокого. (возможно стоит ознакомиться, какие идеи есть?)
 //TODO Перенос приложения на iOS.
-//TODO Улучшеить исполнения паттерна МВП.
-//TODO сделать корректный ProgressDialog для БД и FireBase.
+//TODO Улучшеить исполнения паттерна МВП. (0 особено для main)
 //TODO остается проблема связанная с плохим соединением с интернетом.
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,11 +21,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,16 +37,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import kirdmt.com.docsworkersvr.CallBacks.HousesCallback;
+import kirdmt.com.docsworkersvr.Interfaces.MainContract;
+import kirdmt.com.docsworkersvr.Presenters.MainPresenter;
 import kirdmt.com.docsworkersvr.R;
-import kirdmt.com.docsworkersvr.util.ConnectivityHelper;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MainContract.View {
 
     static final String FIREBASE_AUTH_TAG = "fireBaseAuthTag";
-
-    private FirebaseDatabase database;
-    private DatabaseReference housesRef;
     private FirebaseAuth mAuth;
 
     private FloatingActionButton fab;
@@ -63,39 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static List<String> housesList;
 
-    private static boolean fireBaseFirstStart = true;
+    MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        getHousesList(new HousesCallback() {
-            @Override
-            public void onCallBack(DataSnapshot snapshot) {
-
-                housesList = new ArrayList<String>();
-
-                for (DataSnapshot snap : snapshot.getChildren()) {
-
-                    housesList.add(snap.child("name").getValue().toString());
-
-                    //Log.w("FBTAG", "Value is: " + snap.child("name").getValue().toString());
-
-                }
-
-                try {
-                    progressDialog.cancel();
-                }
-                catch (Exception e)
-                {
-                    Log.d("progressDialogTagExcept", "Exception is: " + e.getMessage());
-                }
-
-
-            }
-        });
+        presenter = new MainPresenter(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -146,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v == fab) {
 
-
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(getString(R.string.alert_title))
                     .setMessage(getString(R.string.alert_main_message))
@@ -171,7 +138,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             String email = emailEdit.getText().toString();
             String password = passwordEdit.getText().toString();
-
             //check fields filling
             if (email.length() > 0 & password.length() > 0) {
                 mAuth.signInWithEmailAndPassword(email, password)
@@ -186,20 +152,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     //Log.w(FIREBASE_AUTH_TAG, "signInWithEmail:failure", task.getException());
-                                    showToast(getString(R.string.no_access));
+                                    //showToast(getString(R.string.no_access));
                                     updateUI(null);
                                 }
 
-                                // ...
                             }
                         });
             } else {
 
-                showToast(getString(R.string.fill_fields));
+                //showToast(getString(R.string.fill_fields));
 
             }
         } else if (v == buttonRegistration) {
-
 //open email intent with extra data.
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse(getString(R.string.mailto)))
@@ -213,9 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         return true;
     }
 
@@ -223,9 +185,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-
         if (id == R.id.action_information) {
-
             actionInformation();
         } else if (id == R.id.action_logout) {
             mAuth.signOut();
@@ -235,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    void actionInformation() {
+    private void actionInformation() {
 
         Intent historyIntent = new Intent(getApplicationContext(), HistoryActivity.class);
         historyIntent.putStringArrayListExtra("housesList", (ArrayList<String>) housesList);
@@ -243,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    void updateUI(FirebaseUser currentUser) {
+    private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
             helloText.setVisibility(View.GONE);
             emailText.setVisibility(View.GONE);
@@ -277,47 +237,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    void showToast(String str) {
-        Toast.makeText(MainActivity.this, str,
+    @Override
+    public void showToast(int stringId) {
+        Toast.makeText(MainActivity.this, getString(stringId),
                 Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void setHousesList(List<String> housesList) {
+        this.housesList = housesList;
+    }
 
-    void getHousesList(final HousesCallback callback) {
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
+    }
 
-        if (ConnectivityHelper.isConnectedToNetwork(this)) {
 
+    @Override
+    public void progressDialogStart() {
+
+        if (progressDialog == null)
             progressDialog = ProgressDialog.show(this, getString(R.string.loading_houses), getString(R.string.please_wait));
 
-        }
-
-        database = FirebaseDatabase.getInstance();
-
-        if (fireBaseFirstStart) {
-            database.setPersistenceEnabled(true);
-            fireBaseFirstStart = false;
-        }
-
-        housesRef = database.getReference("houses");
-        housesRef.keepSynced(true);
-        housesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                callback.onCallBack(dataSnapshot);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(FIREBASE_AUTH_TAG, "Failed to read value.", error.toException());
-            }
-
-        });
-
-        //  }
     }
+
+    @Override
+    public void progressDialogCancel() {
+
+        if (progressDialog.isShowing())
+            progressDialog.cancel();
+
+    }
+
 
 
 }

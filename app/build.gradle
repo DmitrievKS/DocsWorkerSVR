@@ -9,8 +9,8 @@ android {
         applicationId "kirdmt.com.docsworkersvr"
         minSdkVersion 19
         targetSdkVersion 28
-        versionName "1.6"  //Данная версияне опкбликована!
-        versionCode 7 //Данная версияне опкбликована!
+        versionName "1.7"  //Данная версияне опкбликована!
+        versionCode 8 //Данная версияне опкбликована!
     }
     buildTypes {
         release {

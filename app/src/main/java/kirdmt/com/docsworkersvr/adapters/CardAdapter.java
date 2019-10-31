@@ -1,6 +1,7 @@
 package kirdmt.com.docsworkersvr.adapters;
 
 import android.content.Context;
+
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,9 +61,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         TextView need = (TextView) cardView.findViewById(R.id.need_text);
         TextView date = (TextView) cardView.findViewById(R.id.date_text);
         TextView method = (TextView) cardView.findViewById(R.id.method_text);
-
-        //Log.d("recyclerTAG", authorStrArr[position]);
-        //Date currentTime = Calendar.getInstance().getTime();
 
         residentStr = support.stringCutter(historyData.get(position).getResident(), 25);
         authorStr = support.stringCutter(historyData.get(position).getAuthor(), 25);

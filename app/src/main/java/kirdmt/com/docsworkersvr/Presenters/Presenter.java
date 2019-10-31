@@ -22,17 +22,17 @@ public class Presenter {
     private Context context;
     int itemsInDataBase;
 
-    //static final List<String> Houses = new ArrayList<String>();
+    static final String DB_DIRECTION = "DB";
+    static final String RIGHT_DIRECTION = "Direct";
 
-    public Presenter(ContractView AddItem, Context context) {
+    public Presenter(ContractView AddItem, Context context, List<String> houseList) {
 
         this.context = context;
         this.view = AddItem;
 
-        model = new Model(context);
+        model = new Model(context, houseList);
 
         saveDataFromBD();
-
 
     }
 
@@ -48,7 +48,7 @@ public class Presenter {
 
             while (itemsInDataBase > 0) {
 
-                model.sendData(true, excelDataList.get(itemsInDataBase - 1), new ModelCallback() {
+                model.sendData(DB_DIRECTION, excelDataList.get(itemsInDataBase - 1), new ModelCallback() {
                     @Override
                     public void onCallBack(String response) {
                     }
@@ -83,15 +83,12 @@ public class Presenter {
 
             view.showProgress(context.getString(R.string.add_item));
 
-            model.sendData(false, excelData, new ModelCallback() {
+            model.sendData(RIGHT_DIRECTION, excelData, new ModelCallback() {
 
                 @Override
                 public void onCallBack(String response) {
 
-                    //Log.d("responseTAG", "result is: " + result);
-
                     if (response.equals("Success")) {
-
 
                         view.hideProgress();
                         view.showToast(response);
@@ -101,10 +98,10 @@ public class Presenter {
 
                     } else {
 
+                        Log.d("responseTAG", "result is: " + response);
                         //не проверенно
                         view.hideProgress();
                         view.showToast(context.getString(R.string.error_message_from_server));
-
 
                     }
 

@@ -67,7 +67,7 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         int savedStagePosition = myPrefs.getInt("stagePositionKey", 0);
         int savedHousesPosition = myPrefs.getInt("housesPositionKey", 0);
 
-        presenter = new Presenter(this, getApplicationContext());
+        presenter = new Presenter(this, getApplicationContext(), housesList);
 
         spinnerAdapterCategory = ArrayAdapter.createFromResource(this,
                 R.array.array_categories, R.layout.spinner_item);

@@ -1,3 +1,4 @@
+
 package kirdmt.com.docsworkersvr.Models;
 
 import android.util.Log;
@@ -32,10 +33,8 @@ public class ModelHistory {
 
     public void getHistoryData(int houseIndex, final ModelHistoryCallback callback) {
 
-        // Read from the database
         historyRef = database.getReference("history/house" + houseIndex);
         //myRef.keepSynced(true);
-
 
         historyRef.orderByChild("number").limitToLast(70).addValueEventListener(new ValueEventListener() {
 
@@ -66,8 +65,6 @@ public class ModelHistory {
 
     public void fireBaseInit() {
 
-
-        // Write a message to the database
         database = FirebaseDatabase.getInstance();
 
       /*  if (fireBaseFirstStart) {
