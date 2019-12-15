@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-public class ConnectivityHelper { //класс для обслуживание проверки на подключение к интернету.
+public final class ConnectivityHelper { //класс для обслуживание проверки на подключение к интернету.
     public static boolean isConnectedToNetwork(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

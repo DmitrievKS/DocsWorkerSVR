@@ -80,6 +80,6 @@
     <string name="alert_title">О приложении:</string>
     <string name="alert_main_message">Приложение написано для практики разработки для Android. Приложение полностью бесплатное и свободно для распространения. По всем вопросам, пожеланиям, идеям добавлений в новые версии, ошибкам - обращаться по электронной почте LLirikNN@gmail.com.</string>
 
-    <string name="version_name">1.7</string>
+    <string name="version_name">1.8</string>
 
 </resources>

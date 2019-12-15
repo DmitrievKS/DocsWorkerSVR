@@ -30,7 +30,6 @@
     </style>
 
 
-
     <!-- Dark Buttons -->
     <style name="ThemeOverlay.MyDarkButton" parent="ThemeOverlay.AppCompat.Dark">
         <item name="colorButtonNormal">@color/grey_500</item>
@@ -59,22 +58,37 @@
     </style>
 
     <style name="Theme.MyCompatTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-    <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
-    <item name="android:actionBarStyle">@style/ActionBar</item>
-    <item name="actionBarStyle">@style/ActionBar</item>
-    <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/black</item>
-    <item name="colorAccent">@color/black</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="actionBarStyle">@style/ActionBar</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/black</item>
     </style>
 
-    <style name="ActionBar"
-        parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/colorPrimary</item>
         <item name="background">@color/black</item>
     </style>
 
+    <style name="Theme.MyCompatTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.MyCompatTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.MyCompatTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
+    <!-- Ваша AppTheme или другие темы и стили здесь -->
+
+    <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона вашу drawable -->
+    <style name="AppThemeLauncher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <!-- для Android 5+ вы можете поменять цвет colorPrimaryDark, чтобы соответствовать цвету windowBackground -->
+        <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
+    </style>
 
 
 </resources>
